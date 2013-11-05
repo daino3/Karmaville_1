@@ -26,7 +26,7 @@ describe User do
       user_low   = create(:user_with_karma, :total => 200, :points => 2)
       user_high  = create(:user_with_karma, :total => 800, :points => 2)
 
-      User.by_karma.should eq [user_high, user_med, user_low]
+      User.joins(:karma_points).group('users.id').order('SUM(karma_points.value) DESC').should eq [user_high, user_med, user_low]
     end
   end
 
@@ -34,7 +34,7 @@ describe User do
     let(:user) { create(:user_with_karma, :total => 500, :points => 2) }
 
     it 'returns the total karma for the user' do
-      user.total_karma.should eq 500
+      user.sum_karma.should eq 500
     end
   end
 

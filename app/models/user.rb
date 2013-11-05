@@ -45,4 +45,8 @@ class User < ActiveRecord::Base
   def full_name
     "#{first_name} #{last_name}"
   end
+
+  def self.number_of_pages(num_of_results_per_page)
+    (all.count/num_of_results_per_page.to_f).ceil
+  end
 end

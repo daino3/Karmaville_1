@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
             :uniqueness => {:case_sensitive => false}
 
   def self.by_karma
-    User.order("point_total DESC") #modified this to reflect the indexing (made the read much quicker vs. going through all database fields)
+    order("point_total DESC") #modified this to reflect the indexing (made the read much quicker vs. going through all database fields)
     # joins(:karma_points).group('users.id').order('SUM(karma_points.value) DESC')
   end
 
@@ -28,6 +28,18 @@ class User < ActiveRecord::Base
 
   def total_karma
     self.point_total # added this as a new method
+  end
+
+  def self.page(page_num, num_of_results = 10)
+    # page_num = 1 unless page_num
+    limit(num_of_results).offset((page_num - 1)*num_of_results)
+
+
+    # if page_num == nil
+    #   limit(num_of_results).offset(0)
+    # else
+    #   limit(num_of_results).offset((page_num - 1)*num_of_results)
+    # end
   end
 
   def full_name

@@ -6,7 +6,25 @@
     <th>Username</th>
     <th>Email</th>
   </tr>
+  <% @counter = 1 %>
   <% @users.each do |user| %>
+    <td><%= @counter %></td>
     <%= render 'user_row', :user => user %>
+    <% @counter += 1 %>
   <% end %>
 </table>
+
+<div class="pagination pagination-large pagination-centered">
+
+  <ul>
+    <li><a href="/users/<%= @page - 1 %>">Prev</a></li>
+    <% if @page %>
+      <li class="<%= @page%5 == 1 ? 'active' : 'disabled' %>"><a href="/users?page=<%= (@page/5)*5 + 1 %>"><%= (@page/5)*5 + 1 %></a></li>
+      <li class='<%= @page%5 == 2 ? 'active' : 'disabled' %>'><a href="/users?page=<%= (@page/5)*5 + 1 %>"><%= (@page/5)*5 + 2 %></a></li>
+      <li class='<%= @page%5 == 3 ? 'active' : 'disabled' %>'><a href="/users?page=<%= (@page/5)*5 + 1 %>"><%= (@page/5)*5 + 3 %></a></li>
+      <li class='<%= @page%5 == 4 ? 'active' : 'disabled' %>'><a href="/users?page=<%= (@page/5)*5 + 1 %>"><%= (@page/5)*5 + 4 %></a></li>
+      <li class='<%= @page%5 == 5 ? 'active' : 'disabled' %>'><a href="/users?page=<%= (@page/5)*5 + 1 %>"><%= (@page/5)*5 + 5 %></a></li>
+    <% end %>
+      <li><a href="/users/<%= @page + 1 %>">Next</a></li>
+  </ul>
+</div>

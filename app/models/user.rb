@@ -47,6 +47,6 @@ class User < ActiveRecord::Base
   end
 
   def self.number_of_pages(num_of_results_per_page)
-    (all.count/num_of_results_per_page.to_f).ceil
+    (count/num_of_results_per_page.to_f).ceil
   end
 end

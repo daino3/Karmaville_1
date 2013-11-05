@@ -23,18 +23,24 @@
         <a class="disabled">Prev</a>
       <% end %>
     </li>
-    <% if @page %>
-      <li class="<%= @page%5 == 1 ? 'active' : 'disabled' %>"><a href="/users?page=<%= (@page/5)*5 + 1 %>"><%= (@page/5)*5 + 1 %></a></li>
-      <li class='<%= @page%5 == 2 ? 'active' : 'disabled' %>'><a href="/users?page=<%= (@page/5)*5 + 1 %>"><%= (@page/5)*5 + 2 %></a></li>
-      <li class='<%= @page%5 == 3 ? 'active' : 'disabled' %>'><a href="/users?page=<%= (@page/5)*5 + 1 %>"><%= (@page/5)*5 + 3 %></a></li>
-      <li class='<%= @page%5 == 4 ? 'active' : 'disabled' %>'><a href="/users?page=<%= (@page/5)*5 + 1 %>"><%= (@page/5)*5 + 4 %></a></li>
-      <li class='<%= @page%5 == 5 ? 'active' : 'disabled' %>'><a href="/users?page=<%= (@page/5)*5 + 1 %>"><%= (@page/5)*5 + 5 %></a></li>
-    <% end %>
-      <li><% if @page < User.number_of_pages(@results_per_page) %>
-        <a href="<%= users_path page: @page + 1 %>">Next</a>
-      <% else %>
-        <a class="disabled">Next</a>
-      <% end %>
+    <% 1.upto(5) do |page_offset| %>
+      <li class="<%= @page%5 == 1 ? 'active' : 'disabled' %>">
+        <a href="<%= users_path page: @page-(@page%5)+page_offset %>"><%= @page-(@page%5)+page_offset %></a>
       </li>
+    <% end %>
+    <% if false %>
+      # loop above replaced this code (commented out):
+      <li class='<%= @page%5 == 2 ? 'active' : 'disabled' %>'><a href="<%= users_path page: @page-(@page%5)+1 %>"><%= @page-(@page%5)+1 %></a></li>
+      <li class='<%= @page%5 == 2 ? 'active' : 'disabled' %>'><a href="<%= users_path page: @page-(@page%5)+2 %>"><%= @page-(@page%5)+2 %></a></li>
+      <li class='<%= @page%5 == 3 ? 'active' : 'disabled' %>'><a href="<%= users_path page: @page-(@page%5)+3 %>"><%= @page-(@page%5)+3 %></a></li>
+      <li class='<%= @page%5 == 4 ? 'active' : 'disabled' %>'><a href="<%= users_path page: @page-(@page%5)+4 %>"><%= @page-(@page%5)+4 %></a></li>
+      <li class='<%= @page%5 == 5 ? 'active' : 'disabled' %>'><a href="<%= users_path page: @page-(@page%5)+5 %>"><%= @page-(@page%5)+5 %></a></li>
+    <% end %>
+    <li><% if @page < @number_of_pages %>
+      <a href="<%= users_path page: @page + 1 %>">Next</a>
+    <% else %>
+      <a class="disabled">Next</a>
+    <% end %>
+    </li>
   </ul>
 </div>

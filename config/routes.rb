@@ -3,6 +3,4 @@ Karmaville::Application.routes.draw do
 
   root :to => 'users#index'
 
-
-  get '/users/:id' => 'users#move'
 end
